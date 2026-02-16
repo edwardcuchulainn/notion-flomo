@@ -1,3 +1,10 @@
+# 强制打印当前运行的 notion_helper 内容，看看到底是啥
+import inspect
+import notionify.notion_helper
+print("========== 当前运行的代码 ==========")
+print(inspect.getsource(notionify.notion_helper.query_all))
+print("====================================")
+
 import os
 import random
 import time
