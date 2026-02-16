@@ -84,11 +84,20 @@ class NotionHelper:
         has_more = True
         start_cursor = None
         while has_more:
-            response = self.client.databases.query_database(
-                database_id=database_id,
-                start_cursor=start_cursor,
-                page_size=100,
-            )
+            # 兼容所有版本的终极安全写法
+            if hasattr(self.client.databases, 'query_database'):
+                response = self.client.databases.query_database(
+                    database_id=database_id,
+                    start_cursor=start_cursor,
+                    page_size=100,
+                )
+            else:
+                response = self.client.databases.query(
+                    database_id=database_id,
+                    start_cursor=start_cursor,
+                    page_size=100,
+                )
+                
             start_cursor = response.get("next_cursor")
             has_more = response.get("has_more")
             results.extend(response.get("results"))
