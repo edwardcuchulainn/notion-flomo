@@ -19,17 +19,18 @@ jobs:
       REPOSITORY: ${{ github.repository }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: 3.11
+          fetch-depth: 0
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip uninstall -y notion-client
-          pip install -r requirements.txt
-            - name: flomo2notion sync
-              run: |
+          pip install --force-reinstall -r requirements.txt
+      - name: flomo2notion sync
+        run: |
           python -u flomo2notion.py
       
